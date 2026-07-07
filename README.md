@@ -60,7 +60,7 @@ Unlike conventional DR classifiers that focus on all five severity stages, this 
 The landing page educates users about diabetic retinopathy, explains the importance of early detection, and provides key screening recommendations before prediction.
 
 <p align="center">
-<img src="images/homepage.png" width="900">
+<img src="images/homepage.jpeg" width="900">
 </p>
 
 ---
@@ -76,7 +76,7 @@ Users upload a retinal fundus image and enter relevant clinical biomarkers. The 
 - SHAP explanation
 
 <p align="center">
-<img src="images/result.png" width="900">
+<img src="images/result.jpeg" width="900">
 </p>
 
 ---
