@@ -1,0 +1,8 @@
+Comparison (TEST):
+Image-only: ACC=0.6066 | AUC=0.6546 | Recall_stage1=0.4363
+Tabular-only: ACC=0.9035 | AUC=0.9735 | Recall_stage1=0.8896
+Fusion: ACC=0.9046 | AUC=0.9718 | Recall_stage1=0.8885
+
+Confusion matrix (fusion):
+[[851  73]
+ [105 837]]

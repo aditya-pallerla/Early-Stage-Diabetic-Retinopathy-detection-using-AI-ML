@@ -1,0 +1,399 @@
+/* src/components/dashboard.css */
+:root {
+  --bg: #070707;
+  --panel: #0d0d0d;
+  --accent: #ff7a00;
+  --accent-soft: #ff9b4a;
+  --muted: #9a9a9a;
+  --text: #f4f4f4;
+}
+
+/* Safety reset, allow Particles canvas behind but visible */
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+}
+
+/* Ensure the particles canvas is behind page content */
+#tsparticles {
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: -1 !important;
+}
+
+/* Top-level container above particles */
+.dashboard-root {
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
+  font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial;
+  color: var(--text);
+}
+
+/* Subtle radial "eye" glow overlay to make background unique */
+.dashboard-root::before {
+  content: "";
+  position: fixed;
+  left: 50%;
+  top: 36%;
+  transform: translate(-50%, -50%);
+  width: 1200px;
+  height: 800px;
+  pointer-events: none;
+  z-index: 0;
+  background: radial-gradient(
+      ellipse at center,
+      rgba(255, 122, 0, 0.06) 0%,
+      rgba(255, 122, 0, 0.03) 10%,
+      transparent 40%
+    ),
+    radial-gradient(
+      ellipse at 70% 70%,
+      rgba(255, 155, 74, 0.02) 0%,
+      transparent 30%
+    );
+  filter: blur(10px);
+  animation: eyePulse 8s ease-in-out infinite;
+  mix-blend-mode: screen;
+}
+@keyframes eyePulse {
+  0% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.98;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.03);
+    opacity: 0.7;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.98;
+  }
+}
+
+/* Navigation */
+.topnav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1200px;
+  margin: 18px auto 0 auto;
+  padding: 0 20px;
+  z-index: 2;
+}
+.brand-title {
+  font-weight: 700;
+  font-size: 18px;
+  color: var(--text);
+}
+.brand-accent {
+  color: var(--accent);
+  margin-left: 6px;
+  display: inline-block;
+  transition: transform 200ms ease, filter 200ms ease;
+}
+.brand-title:hover .brand-accent {
+  transform: scale(1.06);
+  filter: drop-shadow(0 6px 18px rgba(255, 122, 0, 0.08));
+}
+.toplinks {
+  display: flex;
+  gap: 18px;
+  align-items: center;
+}
+.nav-link {
+  color: var(--muted);
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 160ms ease, transform 160ms ease;
+}
+.nav-link:hover {
+  color: var(--accent);
+  transform: translateY(-2px);
+}
+
+/* layout stacked */
+.dashboard-container {
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+  align-items: center;
+  padding: 32px 20px 60px;
+  max-width: 980px;
+  margin: 8px auto 40px auto;
+  z-index: 2;
+}
+
+/* Hero */
+.hero {
+  width: 100%;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), transparent);
+  padding: 26px;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.02);
+}
+.hero-title {
+  font-size: 32px;
+  margin: 0 0 10px 0;
+  font-weight: 700;
+}
+.hero-title .highlight {
+  color: var(--accent);
+  background: linear-gradient(
+    90deg,
+    rgba(255, 122, 0, 0.12),
+    rgba(255, 155, 74, 0.06)
+  );
+  padding: 4px 8px;
+  border-radius: 6px;
+  transition: transform 180ms ease, background-position 400ms ease;
+  background-size: 200% 100%;
+  background-position: left center;
+}
+.hero-title .highlight:hover {
+  transform: translateY(-2px);
+  background-position: right center;
+}
+.hero-sub {
+  color: var(--muted);
+  margin: 8px 0 14px 0;
+}
+.dr-bullets {
+  color: var(--muted);
+  margin-left: 18px;
+}
+
+/* Upload placeholder */
+.placeholder-box {
+  width: 100%;
+  max-width: 720px;
+  min-height: 260px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.015);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 26px;
+  border: 1px solid rgba(255, 255, 255, 0.02);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.45);
+}
+.placeholder-inner h3 {
+  margin: 0 0 8px 0;
+  color: var(--text);
+}
+.placeholder-inner .muted {
+  color: var(--muted);
+}
+
+@media (max-width: 700px) {
+  .hero-title {
+    font-size: 24px;
+  }
+  .dashboard-container {
+    padding: 20px;
+    gap: 20px;
+  }
+  .placeholder-box {
+    padding: 18px;
+    min-height: 220px;
+  }
+}
+.title-split {
+  font-size: 2rem;
+  font-weight: 800;
+  color: white;
+  text-align: center;
+}
+
+.title-split .letter {
+  display: inline-block;
+  transition: transform 0.2s ease;
+  color: #fff;
+}
+
+.title-split .letter:hover {
+  transform: scale(1.4); /* only hovered letter grows */
+  color: #ff7a00; /* optional: make hovered letter orange */
+}
+/* Upload card layout: center contents, narrower inputs (60% width of card) */
+.upload-card {
+  width: 100%;
+  max-width: 720px;
+  margin: 18px auto;
+  border-radius: 14px;
+  padding: 28px 26px;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.02),
+    rgba(255, 255, 255, 0.01)
+  );
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.02);
+  position: relative;
+  z-index: 2;
+}
+
+/* inner wrapper centers content vertically and horizontally */
+.upload-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* center horizontally */
+  gap: 14px;
+}
+
+/* drop zone */
+.drop-zone {
+  width: 60%; /* narrower: 60% of card */
+  min-height: 110px;
+  border-radius: 12px;
+  border: 2px dashed rgba(204, 102, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px;
+  text-align: center;
+  color: #e6dacc;
+  background: rgba(0, 0, 0, 0.35);
+  transition: background 180ms ease, transform 120ms ease;
+}
+.drop-zone p {
+  margin: 0 0 8px 0;
+  color: #d9cdbf;
+  font-size: 0.98rem;
+}
+.drop-zone:hover {
+  background: rgba(204, 102, 0, 0.04);
+  transform: translateY(-2px);
+}
+
+/* file input style - visually hidden native input, keep label button */
+.choose-file-btn {
+  display: inline-block;
+  margin-top: 6px;
+  padding: 8px 12px;
+  background: rgba(204, 102, 0, 0.12);
+  color: #f3e9dd;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+.choose-file-btn input {
+  display: none;
+}
+
+/* preview */
+.preview-wrap {
+  margin-top: 12px;
+}
+.preview-img {
+  width: 140px;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+/* Form: inputs 60% width, centered and subtle dark background */
+.blood-form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  margin-top: 14px;
+}
+.form-row {
+  width: 60%; /* input width only 60% of card */
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.blood-form input {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.03);
+  background: rgba(20, 20, 20, 0.7); /* darkish input bg */
+  color: #e6e0d8; /* subtle off-white text */
+  outline: none;
+  font-size: 0.98rem;
+  transition: box-shadow 140ms ease, transform 120ms ease;
+}
+.blood-form input::placeholder {
+  color: rgba(230, 224, 216, 0.55);
+}
+
+/* slight focus */
+.blood-form input:focus {
+  box-shadow: 0 6px 18px rgba(204, 102, 0, 0.12);
+  transform: translateY(-1px);
+}
+
+/* submit button row */
+.submit-row {
+  width: 60%;
+  display: flex;
+  justify-content: center;
+  margin-top: 8px;
+}
+.btn-primary {
+  padding: 10px 28px;
+  border-radius: 10px;
+  background: linear-gradient(180deg, #cc6600, #b25600);
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  font-weight: 700;
+}
+.btn-primary[disabled] {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* error style aligned with left of input (but since inputs are centered, keep small) */
+.error {
+  color: #ff7070;
+  font-size: 0.82rem;
+  margin-top: 6px;
+  align-self: flex-start;
+}
+
+/* responsive: on small screens, inputs expand to 92% */
+@media (max-width: 700px) {
+  .drop-zone,
+  .form-row,
+  .submit-row {
+    width: 92%;
+  }
+  .upload-card {
+    padding: 18px;
+  }
+}
+.hero-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  align-items: start;
+}
+
+.hero-image {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.hero-img {
+  max-width: 100%;
+  width: 85%;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+  object-fit: cover;
+}

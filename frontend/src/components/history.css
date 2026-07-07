@@ -1,0 +1,318 @@
+/* src/components/history.css */
+
+/* === COPIED GLOBAL/THEME STYLES FROM dashboard.css === */
+
+:root {
+  --bg: #070707;
+  --panel: #0d0d0d;
+  --accent: #ff7a00;
+  --accent-soft: #ff9b4a;
+  --muted: #9a9a9a;
+  --text: #f4f4f4;
+}
+
+/* Safety reset, allow Particles canvas behind but visible */
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+}
+
+/* Ensure the particles canvas is behind page content (Use unique ID for history page) */
+#tsparticles-history {
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: -1 !important;
+}
+
+/* Top-level container above particles */
+.dashboard-root {
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
+  font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial;
+  color: var(--text);
+  /* Added the "eye" glow animation wrapper */
+}
+
+/* Subtle radial "eye" glow overlay (copied directly) */
+.dashboard-root::before {
+  content: "";
+  position: fixed;
+  left: 50%;
+  top: 36%;
+  transform: translate(-50%, -50%);
+  width: 1200px;
+  height: 800px;
+  pointer-events: none;
+  z-index: 0;
+  background: radial-gradient(
+      ellipse at center,
+      rgba(255, 122, 0, 0.06) 0%,
+      rgba(255, 122, 0, 0.03) 10%,
+      transparent 40%
+    ),
+    radial-gradient(
+      ellipse at 70% 70%,
+      rgba(255, 155, 74, 0.02) 0%,
+      transparent 30%
+    );
+  filter: blur(10px);
+  animation: eyePulse 8s ease-in-out infinite;
+  mix-blend-mode: screen;
+}
+@keyframes eyePulse {
+  0% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.98;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.03);
+    opacity: 0.7;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.98;
+  }
+}
+
+/* Navigation (copied directly) */
+.topnav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1200px;
+  margin: 18px auto 0 auto;
+  padding: 0 20px;
+  z-index: 2;
+  position: sticky; /* Keep nav visible on scroll */
+  top: 0;
+  background: rgba(
+    7,
+    7,
+    7,
+    0.8
+  ); /* Semi-transparent background for sticky nav */
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+.toplinks {
+  display: flex;
+  gap: 18px;
+  align-items: center;
+}
+.nav-link {
+  color: var(--muted);
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 160ms ease, transform 160ms ease;
+}
+.nav-link:hover {
+  color: var(--accent);
+  transform: translateY(-2px);
+}
+.title-split {
+  font-size: 2rem;
+  font-weight: 800;
+  color: white;
+  text-align: center;
+}
+.title-split .letter {
+  display: inline-block;
+  transition: transform 0.2s ease;
+  color: #fff;
+}
+.title-split .letter:hover {
+  transform: scale(1.4);
+  color: #ff7a00;
+}
+/* === END COPIED GLOBAL/THEME STYLES === */
+
+/* === HISTORY PAGE SPECIFIC STYLES === */
+
+.history-container {
+  max-width: 1000px;
+  width: 95%;
+  margin: 40px auto 60px auto;
+  padding: 20px;
+  background: var(--panel);
+  border-radius: 14px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.02);
+  z-index: 2;
+  position: relative;
+}
+
+.history-title {
+  color: var(--accent-soft);
+  margin-top: 0;
+  font-size: 24px;
+  font-weight: 700;
+  border-bottom: 2px solid rgba(255, 122, 0, 0.1);
+  padding-bottom: 10px;
+}
+
+.no-history {
+  color: var(--muted);
+  text-align: center;
+  font-style: italic;
+  padding: 40px 0;
+}
+
+/* Sort button */
+.sort-btn {
+  background: rgba(255, 122, 0, 0.1);
+  color: var(--accent-soft);
+  border: 1px solid rgba(255, 122, 0, 0.3);
+  padding: 8px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  margin-bottom: 15px;
+  transition: background 150ms ease;
+}
+.sort-btn:hover {
+  background: rgba(255, 122, 0, 0.2);
+}
+
+/* Table styling */
+.history-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  margin-top: 20px;
+  font-size: 0.95rem;
+}
+
+.history-table th,
+.history-table td {
+  padding: 12px 15px;
+  text-align: left;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.history-table th {
+  color: var(--accent-soft);
+  background-color: rgba(255, 122, 0, 0.08);
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+}
+
+.history-table tr:hover {
+  background-color: rgba(255, 255, 255, 0.03);
+}
+
+/* Cell specific styling */
+.history-table td {
+  color: var(--text);
+}
+.history-table td:first-child {
+  color: var(--muted);
+} /* Index column */
+.history-table td:nth-child(3) {
+  font-weight: 700;
+  color: var(--accent-soft);
+} /* Months to progression */
+
+/* Stage styling */
+.stage-alert {
+  background: #9a3f3f;
+  color: #ffcaca;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-weight: 700;
+  font-size: 0.9em;
+}
+
+.stage-ok {
+  background: #3f6e4a;
+  color: #caffd2;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-weight: 700;
+  font-size: 0.9em;
+}
+
+/* Grad-CAM Thumbnail */
+.gradcam-thumb {
+  width: 60px;
+  height: 40px;
+  object-fit: cover;
+  border-radius: 6px;
+  cursor: zoom-in;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  transition: transform 120ms ease;
+}
+.gradcam-thumb:hover {
+  transform: scale(1.05);
+}
+
+/* Responsive Table */
+@media (max-width: 768px) {
+  .history-container {
+    padding: 15px;
+  }
+  .history-table th,
+  .history-table td {
+    padding: 8px 10px;
+  }
+  .history-table thead {
+    display: none;
+  } /* Hide headers on small screens */
+  .history-table,
+  .history-table tbody,
+  .history-table tr,
+  .history-table td {
+    display: block;
+    width: 100%;
+  }
+  .history-table tr {
+    margin-bottom: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.04);
+    border-radius: 8px;
+    padding: 10px;
+  }
+  .history-table td {
+    text-align: right;
+    padding-left: 50%;
+    position: relative;
+  }
+  .history-table td::before {
+    content: attr(data-label);
+    position: absolute;
+    left: 10px;
+    width: 45%;
+    padding-right: 10px;
+    white-space: nowrap;
+    text-align: left;
+    font-weight: 600;
+    color: var(--accent-soft);
+  }
+
+  /* Set data-label attributes for accessibility and display */
+  .history-table tr td:nth-child(1)::before {
+    content: "Record #";
+  }
+  .history-table tr td:nth-child(2)::before {
+    content: "Date & Time";
+  }
+  .history-table tr td:nth-child(3)::before {
+    content: "Months to Prog.";
+  }
+  .history-table tr td:nth-child(4)::before {
+    content: "Predicted Stage";
+  }
+  .history-table tr td:nth-child(5)::before {
+    content: "Grad-CAM";
+  }
+  .gradcam-thumb {
+    width: 100px;
+    height: auto;
+  }
+}

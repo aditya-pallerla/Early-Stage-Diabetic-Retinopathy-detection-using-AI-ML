@@ -1,0 +1,7 @@
+Accuracy (excluding abstain): 0.9241
+AUC (excluding abstain): 0.9244
+Confusion Matrix:
+[[790  53]
+ [ 78 805]]
+
+Abstain Rate: 0.0750 (140 samples)

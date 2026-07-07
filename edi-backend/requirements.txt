@@ -1,0 +1,11 @@
+flask
+flask-cors
+python-dotenv
+torch
+torchvision # Needed for image processing utilities in PyTorch
+numpy
+pandas
+scikit-learn
+Pillow
+pytorch-gradcam
+shap

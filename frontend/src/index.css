@@ -1,0 +1,9 @@
+/* src/index.css */
+@import "./components/dashboard.css";
+
+/* small safe resets so we never overwrite the page bg */
+html,
+body {
+  margin: 0;
+  padding: 0;
+}

@@ -1,0 +1,26 @@
+External Evaluation
+
+Image-only:
+  ACC: 0.5000
+  AUC: 0.4291
+  Recall: 0.0240
+  Confusion:
+[[244   6]
+ [244   6]]
+
+Tabular-only:
+  ACC: 0.6620
+  AUC: 0.7069
+  Recall: 0.6480
+  Confusion:
+[[169  81]
+ [ 88 162]]
+
+Fusion:
+  ACC: 0.6620
+  AUC: 0.6636
+  Recall: 0.6480
+  Confusion:
+[[169  81]
+ [ 88 162]]
+
